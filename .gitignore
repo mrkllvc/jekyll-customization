@@ -1,0 +1,6 @@
+# _site will be versioned in the other branch
+_site
+.sass-cache
+.jekyll-cache
+.jekyll-metadata
+vendor
