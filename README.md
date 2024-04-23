@@ -44,6 +44,6 @@ $ git commit -m "jekyll first build"
 $ git push origin gh-pages
 ```
 
-Wait for the site to deploy and check `Settings/Pages`: "Your site is live at https://<user-name>.github.io/jekyll-test/".
+Wait for the site to deploy and check `Settings/Pages`: Your site is live at [https://<user-name>.github.io/jekyll-test/](https://mrkllvc.github.io/jekyll-test/)
 
 ![gh repo create](./images/README_site_deployment.png)
