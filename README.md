@@ -1,8 +1,13 @@
-  
-# How-to
-Build Jekyll site locally and push source code and site to separate branches: main and gh-pages on GitHub. Mainly following the answer [here](https://stackoverflow.com/a/28252200).
+# jekyll-test
 
-Initialize the repository and jekyll code base:
+Repository for testing Jekyll setup where the site is built locally, source and site are then pushed to separate branches main and gh-pages respectively.
+
+Using default minima theme with only added `assets/main.scss` to enable dark mode by turning on or off dark mode in the OS.
+
+## How-to
+Build Jekyll site locally and push source code and site to separate branches: main and gh-pages on GitHub mainly following the answer [here](https://stackoverflow.com/a/28252200).
+
+First, initialize the repository and Jekyll code base:
 ```bash
 $ mkdir jekyll-test && cd jekyll-test
 $ git init --initial-branch=main
@@ -10,12 +15,13 @@ $ git remote add origin git@github.com:<user-name>/jekyll-test.git
 $ jekyll new .
 ```
 
-Set `baseurl: '/jekyll-test'` in `_config.yml`. Add `_site` to `.gitignore`, because the site will be versioned in separate gh-pages branch. Next, run:
+Set `baseurl: '/jekyll-test'` in `_config.yml` and add `_site` to `.gitignore`, because the site will be versioned in separate gh-pages branch. 
+
+Next, to build the site and serve it locally at: `http://127.0.0.1:4000/jekyll-test/`, run:
 ```bash
 $ jekyll build
 $ bundle exec jekyll serve
 ```
-to build the site and serve it locally at: `http://127.0.0.1:4000/jekyll-test/`.
 
 Add the local repository to GitHub:
 ```bash
