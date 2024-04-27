@@ -2,7 +2,7 @@ title: Jekyll Customization
 description: >- # this means to ignore newlines until "baseurl:"
   How to quickly customize and add features to a Jekyll website
 baseurl: "/jekyll-customization" # the subpath of your site, e.g. /blog
-url: "" # the base hostname & protocol for your site, e.g. http://example.com
+url: "https://mrkllvc.github.io/jekyll-customization" # the base hostname & protocol for your site, e.g. http://example.com
 github_username: mrkllvc
 
 # Build settings

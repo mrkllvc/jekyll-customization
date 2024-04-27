@@ -5,7 +5,7 @@
   <input type="hidden" name="$Date" value="{{ site.time | date: '%s' }}">
   <input type="hidden" name="$BlogPost" value="{{ page.title }}">
   <input type="hidden" name="subject" value="Comment to blog post {{ site.time | date_to_rfc822 }}">
-  <input type="hidden" name="redirectTo" value="{{ page.url | prepend: site.baseurl | prepend: site.url }}">
+  <input type="hidden" name="redirectTo" value="https://mrkllvc.github.io/jekyll-customization/">
 
   <textarea class="wide-field" id="message" name="message" rows="8" cols="68" 
   placeholder="Your comment (Markdown and MathJax accepted)" required></textarea>
@@ -25,7 +25,7 @@
   <input id="from-name" type="hidden" name="from_name" value="{{ site.time | date: '%s' }}">
   <input id="input-subject" type="hidden" name="subject" value="{{ page.title }}">
   <input id="input-access-key" type="hidden" name="access_key" value="{{ site.comments.web3forms.token }}">
-  <input id="input-redirect" type="hidden" name="redirect" value="{{ page.url | prepend: site.baseurl | prepend: site.url }}">
+  <input id="input-redirect" type="hidden" name="redirect" value="https://mrkllvc.github.io/jekyll-customization/">
 
   <textarea id="message" name="message" rows="10" cols="80" 
   placeholder="Your comment (Markdown and MathJax accepted)" required></textarea>
