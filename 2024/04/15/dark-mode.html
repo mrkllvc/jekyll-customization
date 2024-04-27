@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Dark Theme | Jekyll Customization</title>
+<meta name="generator" content="Jekyll v4.3.3" />
+<meta property="og:title" content="Dark Theme" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="This post describes how to enable dark mode and modify the dark theme colors for a basic Jekyll build site." />
+<meta property="og:description" content="This post describes how to enable dark mode and modify the dark theme colors for a basic Jekyll build site." />
+<link rel="canonical" href="http://localhost:4000/jekyll-customization/2024/04/15/dark-mode.html" />
+<meta property="og:url" content="http://localhost:4000/jekyll-customization/2024/04/15/dark-mode.html" />
+<meta property="og:site_name" content="Jekyll Customization" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2024-04-15T00:00:00+02:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Dark Theme" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2024-04-15T00:00:00+02:00","datePublished":"2024-04-15T00:00:00+02:00","description":"This post describes how to enable dark mode and modify the dark theme colors for a basic Jekyll build site.","headline":"Dark Theme","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/jekyll-customization/2024/04/15/dark-mode.html"},"url":"http://localhost:4000/jekyll-customization/2024/04/15/dark-mode.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/jekyll-customization/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/jekyll-customization/feed.xml" title="Jekyll Customization" /></head>
+<body><header class="site-header">
+    <link rel="apple-touch-icon" sizes="180x180" href="https://github.com/mrkllvc/jekyll-customization/tree/main/assets/img/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://github.com/mrkllvc/jekyll-customization/tree/main/assets/img/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://github.com/mrkllvc/jekyll-customization/tree/main/assets/img/favicon-16x16.png">
+    <link rel="manifest" href="https://github.com/mrkllvc/jekyll-customization/tree/main/assets/img/site.webmanifest">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <meta name="msapplication-config" content="https://github.com/mrkllvc/jekyll-customization/tree/main/assets/img/browserconfig.xml">
+    <!-- permalinks -->
+    <!-- https://github.com/mrkllvc/jekyll-customization/blob/a80ab4a1a7768b67706847c607986b6affe5d6e7/assets/img/android-chrome-192x192.png -->
+    <div class="wrapper"><a class="site-title" rel="author" href="/jekyll-customization/">Jekyll Customization</a><nav class="site-nav">
+          <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+          <label for="nav-trigger">
+            <span class="menu-icon about-span">
+              <svg viewBox="0 0 18 15" width="18px" height="15px">
+                <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+              </svg>
+            </span>
+          </label>
+  
+          <div class="trigger"><a class="page-link" href="/jekyll-customization/about/">About</a></div>
+        </nav></div>
+  </header><main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Dark Theme</h1>
+    <p class="post-meta"><time class="dt-published" datetime="2024-04-15T00:00:00+02:00" itemprop="datePublished">
+        Apr 15, 2024
+      </time></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <p>This post describes how to enable dark mode and modify the dark theme colors for a basic Jekyll build site.</p>
+
+<p>To switch to dark mode by turning on dark mode in the OS, you can create and adjust the <code class="language-plaintext highlighter-rouge">custom.scss</code> in <code class="language-plaintext highlighter-rouge">./_sass</code> directory.</p>
+
+<p>For example, to set dark background color and white text in dark mode and adjust the syntax highlighting your code:</p>
+<div class="language-scss highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">@media</span> <span class="p">(</span><span class="n">prefers-color-scheme</span><span class="o">:</span> <span class="n">dark</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nt">body</span> <span class="p">{</span>
+      <span class="nl">background-color</span><span class="p">:</span> <span class="mh">#1c1b1f</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="nt">p</span><span class="o">,</span> <span class="nt">h1</span><span class="o">,</span> <span class="nt">h2</span><span class="o">,</span> <span class="nt">h3</span> <span class="p">{</span>
+        <span class="nl">color</span><span class="p">:</span> <span class="no">white</span><span class="p">;</span>
+    <span class="p">}</span>
+    
+    <span class="c1">// for syntax highlighting your code in dark mode:</span>
+    <span class="nt">pre</span><span class="o">,</span>
+    <span class="nt">code</span> <span class="p">{</span>
+        <span class="nl">color</span><span class="p">:</span> <span class="mh">#e3fae3</span><span class="p">;</span>
+        <span class="nl">border</span><span class="p">:</span> <span class="nb">none</span><span class="p">;</span>
+        <span class="nl">background-color</span><span class="p">:</span> <span class="nf">rgb</span><span class="p">(</span><span class="m">0</span><span class="o">,</span> <span class="m">0</span><span class="o">,</span> <span class="m">0</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="nc">.highlight</span> <span class="p">{</span>
+        <span class="nc">.highlighter-rouge</span> <span class="k">&amp;</span> <span class="p">{</span>
+            <span class="nl">color</span><span class="p">:</span> <span class="mh">#00FF00</span><span class="p">;</span>
+            <span class="nl">border</span><span class="p">:</span> <span class="nb">none</span><span class="p">;</span>
+            <span class="nl">background-color</span><span class="p">:</span> <span class="no">black</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span> 
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Then, import the styles in <code class="language-plaintext highlighter-rouge">main.scss</code> in the <code class="language-plaintext highlighter-rouge">./assets/</code> directory:</p>
+
+<div class="language-scss highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">---</span>
+<span class="nt">---</span>
+
+<span class="o">@</span><span class="nt">import</span> <span class="s2">"minima"</span><span class="p">;</span>
+<span class="k">@import</span> <span class="s2">"custom"</span><span class="p">;</span>
+</code></pre></div></div>
+
+  </div>
+
+  <!-- Simple comments -->
+  <div>
+    <section class="comments" id="comment-section">
+  <!-- <hr> -->
+  
+
+  <!-- New comment form -->
+  <div id="respond" class="comment__new">
+    <h2>Add Comment</h2>
+
+<form id="input-form" method="post" action="https://api.staticforms.xyz/submit">
+  <input type="hidden" name="accessKey" value="4e5a5ee1-5fd9-47ed-9b85-aecdabd0c006">
+  <input type="hidden" name="$Date" value="1714259012">
+  <input type="hidden" name="$BlogPost" value="Dark Theme">
+  <input type="hidden" name="subject" value="Comment to blog post Sun, 28 Apr 2024 01:03:32 +0200">
+  <input type="hidden" name="redirectTo" value="https://mrkllvc.github.io/jekyll-customization/">
+
+  <textarea class="wide-field" id="message" name="message" rows="8" cols="68" 
+  placeholder="Your comment (Markdown and MathJax accepted)" required></textarea>
+  <label for="name">Name</label>
+  <input class="input-field" id="name" name="name" type="text" placeholder="Your name (required)" required />
+  <label for="name">E-mail (optional)</label>
+  <input class="input-field" id="name" name="$Email" type="text" placeholder="Your email (if you want a notification)" />
+  <div>
+    <button id="submit-button" type="submit">Submit</button>
+    <p id="thank-you-message">Message sent! Thank you.</p>
+  </div>
+</form>
+
+
+<script>
+  const form = document.getElementById("input-form");
+  const thankYouMessage = document.querySelector('#thank-you-message');
+  form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      document.getElementById("submit-button").style.display = "none";
+      thankYouMessage.classList.add('show');
+      setTimeout(() => form.submit(), 1000);
+  });
+  
+  // Reset the form fields when the page loads
+  window.onload = function() {
+      form.reset();
+  };
+</script>
+  </div>
+</section>
+  </div>
+
+  <a class="u-url" href="/jekyll-customization/2024/04/15/dark-mode.html" hidden></a>
+</article>
+      </div>
+    </main>
+
+    <!-- MathJax config and snippet -->
+    <script type="text/javascript">
+      window.MathJax = {
+        tex: {
+            packages: ['base', 'ams', 'newcommand'],
+            inlineMath: [['$', '$'], ['\\(', '\\)']],
+            tags: 'ams'
+        },
+        loader: {
+            load: ['ui/menu', '[tex]/ams', '[tex]/newcommand']
+        }
+      };
+    </script>
+    <script type="text/javascript" id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+    </script><footer class="site-footer h-card">
+    <data class="u-url" href="/jekyll-customization/"></data>
+  
+    <div class="wrapper">
+  
+      <div class="footer-col-wrapper">
+        <div class="footer-col">
+        </div>
+      </div>
+      <div class="source-code-link">
+        Source code: <a href="https://github.com/mrkllvc/jekyll-customization">jekyll-customization</a>
+      </div>
+      <div class="social-links"><ul class="social-media-list"><li><a href="https://github.com/mrkllvc"><svg class="svg-icon"><use xlink:href="/jekyll-customization/assets/minima-social-icons.svg#github"></use></svg> <span class="username">mrkllvc</span></a></li></ul>
+</div>
+  
+    </div>
+  
+  </footer></body>
+
+</html>

@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.3">Jekyll</generator><link href="http://localhost:4000/jekyll-customization/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/jekyll-customization/" rel="alternate" type="text/html" /><updated>2024-04-28T01:03:32+02:00</updated><id>http://localhost:4000/jekyll-customization/feed.xml</id><title type="html">Jekyll Customization</title><subtitle>How to quickly customize and add features to a Jekyll website</subtitle><entry><title type="html">Comment System</title><link href="http://localhost:4000/jekyll-customization/2024/04/23/comment-system.html" rel="alternate" type="text/html" title="Comment System" /><published>2024-04-23T00:00:00+02:00</published><updated>2024-04-23T00:00:00+02:00</updated><id>http://localhost:4000/jekyll-customization/2024/04/23/comment-system</id><content type="html" xml:base="http://localhost:4000/jekyll-customization/2024/04/23/comment-system.html"><![CDATA[<p>One way to enable comments on a fully static Jekyll website is via Node.js application called <a href="https://github.com/eduardoboucas/staticman">staticman</a>. For this, we have to run the instance of staticman either on our own infrastructure or by using a service such as Heroku. However, in 2022 Heroku shut down their free tier.</p>
+
+<p>This post explains how to develop a simple comment system for Jekyll website via contact forms. There are many free options for contact forms for static websites, such as <a href="https://www.staticforms.xyz/">staticforms</a> and <a href="https://web3forms.com/">web3forms</a>.</p>
+
+<p>You provide an email address and they give you an api address, for example:</p>
+
+<blockquote>
+  <p>https://api.staticforms.xyz/submit</p>
+</blockquote>
+
+<p>and an access key such as:</p>
+
+<blockquote>
+  <p>e44fc5d0-0b52-4cb1-9f79-fefc3800d89c</p>
+</blockquote>
+
+<p>Form submissions can be received directly through email without the need for server or back-end code. An email alias is recommended for privacy and security reasons. For more security, some other method should be used.</p>
+
+<p>The staticman templates written in liquid can be adapted to replace the Node.js application with contact forms. The following short instructions can help to recreate this simplified comment system.</p>
+
+<h2 id="instructions">Instructions</h2>
+
+<p><code class="language-plaintext highlighter-rouge">1.</code> The given api address and access key can be saved to <code class="language-plaintext highlighter-rouge">_config.yml</code> for easy access.</p>
+
+<p><code class="language-plaintext highlighter-rouge">2.</code> Write a <code class="language-plaintext highlighter-rouge">comment_form.html</code> in <code class="language-plaintext highlighter-rouge">./_includes</code> directory. For example:</p>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;form</span> <span class="na">method=</span><span class="s">"post"</span> <span class="na">action=</span><span class="s">""</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"hidden"</span> <span class="na">name=</span><span class="s">"accessKey"</span> <span class="na">value=</span><span class="s">""</span><span class="nt">&gt;</span>
+
+  <span class="c">&lt;!-- form inputs --&gt;</span>
+<span class="nt">&lt;/form&gt;</span>
+</code></pre></div></div>
+<p>In the form inputs should be the textarea for the comment, name and submit button. You can define some hidden inputs in order to send the time and date when the comment was submitted and the name of the blog post. For example here via <code class="language-plaintext highlighter-rouge">staticforms</code> this custom inputs can be defined as:</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"hidden"</span> <span class="na">name=</span><span class="s">"$Date"</span> <span class="na">value=</span><span class="s">"1714259012"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"hidden"</span> <span class="na">name=</span><span class="s">"$BlogPost"</span> <span class="na">value=</span><span class="s">"Comment System"</span><span class="nt">&gt;</span>
+</code></pre></div></div>
+
+<p>This way, when someone submits a comment, you get an email with the comment, name, submission date and name of the blog post.</p>
+
+<p><code class="language-plaintext highlighter-rouge">3.</code> Write this data to <code class="language-plaintext highlighter-rouge">_data/comments/post-name</code> directory in a YAML file. For example this is the data for the first comment on this page. Date and time is in <a href="https://www.unixtimestamp.com/">unixtimestamp</a> format:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">_id</span><span class="pi">:</span> <span class="m">1</span>
+<span class="na">_parent</span><span class="pi">:</span> <span class="s1">'</span><span class="s">jekyll-customization/comment-system'</span>
+<span class="na">replying_to_uid</span><span class="pi">:</span> <span class="s1">'</span><span class="s">'</span>
+<span class="na">message</span><span class="pi">:</span> <span class="s1">'</span><span class="s">This</span><span class="nv"> </span><span class="s">is</span><span class="nv"> </span><span class="s">just</span><span class="nv"> </span><span class="s">a</span><span class="nv"> </span><span class="s">test'</span>
+<span class="na">name</span><span class="pi">:</span> <span class="s1">'</span><span class="s">Lambda'</span>
+<span class="na">date</span><span class="pi">:</span> <span class="m">1714228019</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">4.</code> Add a <code class="language-plaintext highlighter-rouge">comment.html</code> in <code class="language-plaintext highlighter-rouge">./_includes</code> directory that reads such YAML file and outputs the html.</p>
+
+<p><code class="language-plaintext highlighter-rouge">5.</code> Add a <code class="language-plaintext highlighter-rouge">comments.html</code> that goes over all posts and all comments including (calling) <code class="language-plaintext highlighter-rouge">comment.html</code> for each YAML file. At the end it should also include <code class="language-plaintext highlighter-rouge">comment_form.html</code> for adding new comments.</p>
+
+<p><code class="language-plaintext highlighter-rouge">6.</code> Include <code class="language-plaintext highlighter-rouge">comments.html</code> in <code class="language-plaintext highlighter-rouge">post.html</code> layout in <code class="language-plaintext highlighter-rouge">./_layouts</code> directory:</p>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c">&lt;!-- ./_posts/post.html --&gt;</span>
+  <span class="nt">&lt;div&gt;</span>
+     <span class="c">&lt;!-- include comments.html  --&gt;</span>
+  <span class="nt">&lt;/div&gt;</span>
+</code></pre></div></div>
+
+<p>This way each blog post site will have the past comments included (sorted by date) and at the bottom there will be a form for adding new comments.</p>
+
+<p>For more information, check the source code of this site: <a href="https://github.com/mrkllvc/jekyll-customization">jekyll-customization</a>. In particular the files: <code class="language-plaintext highlighter-rouge">./_posts/post.html</code>, <code class="language-plaintext highlighter-rouge">./_includes/comments.html</code>, and <code class="language-plaintext highlighter-rouge">./_data/comments/post-name/</code> YAML files with comment data. You can also try adding a comment on this site.</p>]]></content><author><name></name></author><summary type="html"><![CDATA[One way to enable comments on a fully static Jekyll website is via Node.js application called staticman. For this, we have to run the instance of staticman either on our own infrastructure or by using a service such as Heroku. However, in 2022 Heroku shut down their free tier.]]></summary></entry><entry><title type="html">Citing</title><link href="http://localhost:4000/jekyll-customization/2024/04/21/citing.html" rel="alternate" type="text/html" title="Citing" /><published>2024-04-21T00:00:00+02:00</published><updated>2024-04-21T00:00:00+02:00</updated><id>http://localhost:4000/jekyll-customization/2024/04/21/citing</id><content type="html" xml:base="http://localhost:4000/jekyll-customization/2024/04/21/citing.html"><![CDATA[<p>This post shows how citing references stored in <code class="language-plaintext highlighter-rouge">simple.bib</code> looks like.</p>
+
+<h1 id="lorem-ipsum">Lorem ipsum</h1>
+<p>Lorem ipsum dolor sit amet <a class="citation" href="#iliad">(Homer, 2004)</a>, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat <a class="citation" href="#nietzsche:ksa">(Nietzsche, 1988)</a>. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+
+<p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo <a class="citation" href="#knuth:ct:b">(Knuth, 1986)</a>. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est <a class="citation" href="#smalltalk">(Beck, 1996)</a>, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur.</p>
+
+<h2 id="references">References</h2>
+
+<ol class="bibliography"><li><span id="iliad">Homer. (2004). <i>Die Ilias</i> (W. Schadewaldt, Tran.; 3rd ed.). Artemis &amp; Winkler.</span></li>
+<li><span id="nietzsche:ksa">Nietzsche, F. (1988). <i>Sämtliche Werke</i> (G. Colli &amp; M. Montinari, Eds.; 2nd ed.). Deutscher Taschenbuch-Verlag and Walter de Gruyter.</span></li>
+<li><span id="knuth:ct:b">Knuth, D. E. (1986). <i>\TeX: The Program: Vol. B</i>. Addison-Wesley.</span></li>
+<li><span id="smalltalk">Beck, K. (1996). <i>Smalltalk Best Practice Patterns</i>. Prentice Hall.</span></li></ol>]]></content><author><name></name></author><summary type="html"><![CDATA[This post shows how citing references stored in simple.bib looks like.]]></summary></entry><entry><title type="html">BibTeX References</title><link href="http://localhost:4000/jekyll-customization/2024/04/20/bibtex-references.html" rel="alternate" type="text/html" title="BibTeX References" /><published>2024-04-20T00:00:00+02:00</published><updated>2024-04-20T00:00:00+02:00</updated><id>http://localhost:4000/jekyll-customization/2024/04/20/bibtex-references</id><content type="html" xml:base="http://localhost:4000/jekyll-customization/2024/04/20/bibtex-references.html"><![CDATA[<p>This site was build using the <a href="https://github.com/inukshuk/jekyll-scholar">jekyll-scholar plugin</a> (version 7.1.3):</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ gem list | grep scholar
+jekyll-scholar (7.1.3)
+</code></pre></div></div>
+
+<p>This post describes how this plugin can be used to cite BibTeX references stored in <code class="language-plaintext highlighter-rouge">.bib</code> files on a website built with Jekyll.</p>
+
+<h2 id="step-by-step-instructions">Step-by-step instructions</h2>
+
+<p><code class="language-plaintext highlighter-rouge">1.</code> Install jekyll-scholar plugin:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>gem <span class="nb">install </span>jekyll-scholar
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">2.</code> Add <code class="language-plaintext highlighter-rouge">gem 'jekyll-scholar', group: :jekyll_plugins</code> to <code class="language-plaintext highlighter-rouge">./Gemfile</code>.</p>
+
+<p><code class="language-plaintext highlighter-rouge">3.</code> Create <code class="language-plaintext highlighter-rouge">./_plugins</code> directory and write: <code class="language-plaintext highlighter-rouge">require 'jekyll/scholar'</code> to <code class="language-plaintext highlighter-rouge">ext.rb</code> file.</p>
+
+<p><code class="language-plaintext highlighter-rouge">4.</code> Set the jekyll-scholar plugin configuration settings in <code class="language-plaintext highlighter-rouge">./_config.yml</code>, this site uses:</p>
+
+<div class="language-yml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># jekyll-scholar plugin settings</span>
+<span class="na">scholar</span><span class="pi">:</span>
+  <span class="na">style</span><span class="pi">:</span> <span class="s">apa</span>
+  <span class="na">locale</span><span class="pi">:</span> <span class="s">en</span>
+  <span class="na">sort_by</span><span class="pi">:</span> <span class="s">none</span>
+  <span class="na">order</span><span class="pi">:</span> <span class="s">ascending</span>
+  <span class="na">source</span><span class="pi">:</span> <span class="s">./_bibliography</span>
+  <span class="na">bibliography</span><span class="pi">:</span> <span class="s">simple.bib</span>
+  <span class="na">bibliography_template</span><span class="pi">:</span> <span class="s2">"</span><span class="s">"</span>
+  <span class="na">replace_strings</span><span class="pi">:</span> <span class="kc">true</span>
+  <span class="na">join_strings</span><span class="pi">:</span>    <span class="kc">true</span>
+  <span class="na">details_dir</span><span class="pi">:</span>    <span class="s">bibliography</span>
+  <span class="na">details_layout</span><span class="pi">:</span> <span class="s">bibtex.html</span>
+  <span class="na">details_link</span><span class="pi">:</span>   <span class="s">Details</span>
+  <span class="na">query</span><span class="pi">:</span> <span class="s2">"</span><span class="s">@*"</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">5.</code> Create <code class="language-plaintext highlighter-rouge">./_bibliography</code> directory and add some <code class="language-plaintext highlighter-rouge">.bib</code> files to it, for example <code class="language-plaintext highlighter-rouge">simple.bib</code>:</p>
+
+<pre><code class="language-BibTeX">@book{ruby,
+   title     = {The Ruby Programming Language},
+   author    = {Flanagan, David and Matsumoto, Yukihiro},
+   year      = {2008},
+   publisher = {O'Reilly Media}
+}
+
+@book{smalltalk,
+   title     = {Smalltalk Best Practice Patterns},
+   author    = {Kent Beck},
+   year      = {1996},
+   publisher = {Prentice Hall}
+}
+</code></pre>
+
+<p><code class="language-plaintext highlighter-rouge">6.</code> Finally, add some content markdown files to <code class="language-plaintext highlighter-rouge">_posts</code> directory for testing. See the post <code class="language-plaintext highlighter-rouge">./_posts/2024-04-23-bibtex-references.md</code> as an example.</p>]]></content><author><name></name></author><summary type="html"><![CDATA[This site was build using the jekyll-scholar plugin (version 7.1.3): $ gem list | grep scholar jekyll-scholar (7.1.3)]]></summary></entry><entry><title type="html">LaTeX Notation</title><link href="http://localhost:4000/jekyll-customization/2024/04/16/latex-notation.html" rel="alternate" type="text/html" title="LaTeX Notation" /><published>2024-04-16T00:00:00+02:00</published><updated>2024-04-16T00:00:00+02:00</updated><id>http://localhost:4000/jekyll-customization/2024/04/16/latex-notation</id><content type="html" xml:base="http://localhost:4000/jekyll-customization/2024/04/16/latex-notation.html"><![CDATA[<p>LaTeX notation can be enabled through the <a href="https://github.com/mathjax/MathJax">MathJax</a> JavaScript display engine.</p>
+
+<p>This post describes how MathJax can be used with Jekyll.</p>
+
+<h2 id="instructions">Instructions</h2>
+<p>First, define the structure and look of the site, by creating:</p>
+
+<ul>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">custom-head.html</code>, <code class="language-plaintext highlighter-rouge">footer.html</code>, <code class="language-plaintext highlighter-rouge">header.html</code> etc. in <code class="language-plaintext highlighter-rouge">./_includes</code> directory.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">base.html</code>, <code class="language-plaintext highlighter-rouge">home.html</code>, <code class="language-plaintext highlighter-rouge">post.html</code> etc. in <code class="language-plaintext highlighter-rouge">./_layouts</code> directory.</p>
+  </li>
+</ul>
+
+<p>Next, in <code class="language-plaintext highlighter-rouge">base.html</code>, define the MathJax configuration, for example:</p>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;</span>
+    <span class="nb">window</span><span class="p">.</span><span class="nx">MathJax</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="na">tex</span><span class="p">:</span> <span class="p">{</span>
+        <span class="na">packages</span><span class="p">:</span> <span class="p">[</span><span class="dl">'</span><span class="s1">base</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">ams</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">newcommand</span><span class="dl">'</span><span class="p">],</span>
+        <span class="na">inlineMath</span><span class="p">:</span> <span class="p">[[</span><span class="dl">'</span><span class="s1">$</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">$</span><span class="dl">'</span><span class="p">],</span> <span class="p">[</span><span class="dl">'</span><span class="se">\\</span><span class="s1">(</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="se">\\</span><span class="s1">)</span><span class="dl">'</span><span class="p">]],</span>
+        <span class="na">tags</span><span class="p">:</span> <span class="dl">'</span><span class="s1">ams</span><span class="dl">'</span>
+    <span class="p">},</span>
+    <span class="na">loader</span><span class="p">:</span> <span class="p">{</span>
+        <span class="na">load</span><span class="p">:</span> <span class="p">[</span><span class="dl">'</span><span class="s1">ui/menu</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">[tex]/ams</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">[tex]/newcommand</span><span class="dl">'</span><span class="p">]</span>
+    <span class="p">}</span>
+    <span class="p">};</span>
+<span class="nt">&lt;/script&gt;</span>
+</code></pre></div></div>
+
+<p>And after this, add the CDN snippet in <code class="language-plaintext highlighter-rouge">base.html</code>:</p>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span> <span class="na">id=</span><span class="s">"MathJax-script"</span> <span class="na">async</span>
+    <span class="na">src=</span><span class="s">"https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;/script&gt;</span>
+</code></pre></div></div>
+
+<p>Finally, test the inline and display modes. The text that follows:</p>
+<pre><code class="language-Latex">$\LaTeX$ test. When $a \ne 0$, there are two solutions to $ax^2 + bx + c = 0$ and they are
+
+$$x = {-b \pm \sqrt{b^2-4ac} \over 2a}.$$
+</code></pre>
+
+<p>should be formatted as:</p>
+
+<p>$\LaTeX$ test. When $a \neq 0$, there are two solutions to $ax^2 + bx + c = 0$ and they are</p>
+
+\[x = {-b \pm \sqrt{b^2-4ac} \over 2a}.\]]]></content><author><name></name></author><summary type="html"><![CDATA[LaTeX notation can be enabled through the MathJax JavaScript display engine.]]></summary></entry><entry><title type="html">Dark Theme</title><link href="http://localhost:4000/jekyll-customization/2024/04/15/dark-mode.html" rel="alternate" type="text/html" title="Dark Theme" /><published>2024-04-15T00:00:00+02:00</published><updated>2024-04-15T00:00:00+02:00</updated><id>http://localhost:4000/jekyll-customization/2024/04/15/dark-mode</id><content type="html" xml:base="http://localhost:4000/jekyll-customization/2024/04/15/dark-mode.html"><![CDATA[<p>This post describes how to enable dark mode and modify the dark theme colors for a basic Jekyll build site.</p>
+
+<p>To switch to dark mode by turning on dark mode in the OS, you can create and adjust the <code class="language-plaintext highlighter-rouge">custom.scss</code> in <code class="language-plaintext highlighter-rouge">./_sass</code> directory.</p>
+
+<p>For example, to set dark background color and white text in dark mode and adjust the syntax highlighting your code:</p>
+<div class="language-scss highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">@media</span> <span class="p">(</span><span class="n">prefers-color-scheme</span><span class="o">:</span> <span class="n">dark</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nt">body</span> <span class="p">{</span>
+      <span class="nl">background-color</span><span class="p">:</span> <span class="mh">#1c1b1f</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="nt">p</span><span class="o">,</span> <span class="nt">h1</span><span class="o">,</span> <span class="nt">h2</span><span class="o">,</span> <span class="nt">h3</span> <span class="p">{</span>
+        <span class="nl">color</span><span class="p">:</span> <span class="no">white</span><span class="p">;</span>
+    <span class="p">}</span>
+    
+    <span class="c1">// for syntax highlighting your code in dark mode:</span>
+    <span class="nt">pre</span><span class="o">,</span>
+    <span class="nt">code</span> <span class="p">{</span>
+        <span class="nl">color</span><span class="p">:</span> <span class="mh">#e3fae3</span><span class="p">;</span>
+        <span class="nl">border</span><span class="p">:</span> <span class="nb">none</span><span class="p">;</span>
+        <span class="nl">background-color</span><span class="p">:</span> <span class="nf">rgb</span><span class="p">(</span><span class="m">0</span><span class="o">,</span> <span class="m">0</span><span class="o">,</span> <span class="m">0</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="nc">.highlight</span> <span class="p">{</span>
+        <span class="nc">.highlighter-rouge</span> <span class="k">&amp;</span> <span class="p">{</span>
+            <span class="nl">color</span><span class="p">:</span> <span class="mh">#00FF00</span><span class="p">;</span>
+            <span class="nl">border</span><span class="p">:</span> <span class="nb">none</span><span class="p">;</span>
+            <span class="nl">background-color</span><span class="p">:</span> <span class="no">black</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span> 
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Then, import the styles in <code class="language-plaintext highlighter-rouge">main.scss</code> in the <code class="language-plaintext highlighter-rouge">./assets/</code> directory:</p>
+
+<div class="language-scss highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">---</span>
+<span class="nt">---</span>
+
+<span class="o">@</span><span class="nt">import</span> <span class="s2">"minima"</span><span class="p">;</span>
+<span class="k">@import</span> <span class="s2">"custom"</span><span class="p">;</span>
+</code></pre></div></div>]]></content><author><name></name></author><summary type="html"><![CDATA[This post describes how to enable dark mode and modify the dark theme colors for a basic Jekyll build site.]]></summary></entry><entry><title type="html">Jekyll and Github Pages</title><link href="http://localhost:4000/jekyll-customization/2024/04/11/jekyll-and-gh-pages.html" rel="alternate" type="text/html" title="Jekyll and Github Pages" /><published>2024-04-11T00:00:00+02:00</published><updated>2024-04-11T00:00:00+02:00</updated><id>http://localhost:4000/jekyll-customization/2024/04/11/jekyll-and-gh-pages</id><content type="html" xml:base="http://localhost:4000/jekyll-customization/2024/04/11/jekyll-and-gh-pages.html"><![CDATA[<p>This Jekyll based site is build locally, source code and site are then pushed to separate branches <code class="language-plaintext highlighter-rouge">main</code> and <code class="language-plaintext highlighter-rouge">gh-pages</code> respectively. This way, non-supported Jekyll site plugins can be used. Furthermore, we don’t need to wait for the site to be build on GitHub after pushing the changes to the source code. This post describes this setup. See also this <a href="https://stackoverflow.com/a/28252200">answer on stackoverflow</a>.</p>
+
+<h2 id="how-to">How to</h2>
+
+<p>First, initialize the repository and Jekyll code base:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">mkdir </span>repository-name <span class="o">&amp;&amp;</span> <span class="nb">cd </span>repository-name
+<span class="nv">$ </span>git init <span class="nt">--initial-branch</span><span class="o">=</span>main
+<span class="nv">$ </span>git remote add origin git@github.com:user-name/repository-name.git
+<span class="nv">$ </span>jekyll new <span class="nb">.</span>
+</code></pre></div></div>
+
+<p>Set <code class="language-plaintext highlighter-rouge">baseurl: '/repository-name'</code> in <code class="language-plaintext highlighter-rouge">_config.yml</code>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>title: Jekyll customizations
+description: &gt;- # ignore newlines until "baseurl:"
+  Jekyll customizations.
+baseurl: "/jekyll-customizations" # the subpath of your site
+url: "" # the base hostname
+github_username: user-name
+
+# Build settings
+theme: minima
+plugins:
+  - jekyll-feed
+
+sass:
+  quiet_deps: true # to supress warnings
+</code></pre></div></div>
+
+<p>Add <code class="language-plaintext highlighter-rouge">_site</code> to <code class="language-plaintext highlighter-rouge">.gitignore</code>, because the site will be versioned in separate gh-pages branch:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>_site # the site will be versioned in the other branch
+.sass-cache
+.jekyll-cache
+.jekyll-metadata
+vendor
+.DS_Store # macOS stuff
+</code></pre></div></div>
+
+<p>Next, to build the site and serve it locally at: <code class="language-plaintext highlighter-rouge">http://127.0.0.1:4000/repository-name/</code>, run:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>jekyll build
+<span class="nv">$ </span>bundle <span class="nb">exec </span>jekyll serve
+</code></pre></div></div>
+
+<p>Add the local repository to GitHub:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">(</span><span class="nv">$ </span>git init <span class="nt">-b</span> main<span class="o">)</span> <span class="c"># if you haven't initialize in the first step</span>
+<span class="nv">$ </span>git add <span class="nb">.</span>
+<span class="nv">$ </span>git commit <span class="nt">-m</span> <span class="s2">"jekyll source"</span>
+</code></pre></div></div>
+<p>Then run <code class="language-plaintext highlighter-rouge">$ gh repo create</code> and choose “Push an existing local repository to GitHub”. Set “.” for Path to local repository. Give the repository a name and description. Set visibility and add a remote.</p>
+
+<p>Push Jekyll source code to the main branch:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>git push origin main
+</code></pre></div></div>
+
+<p>Push the site to gh-pages branch:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">cd </span>_site
+<span class="nv">$ </span><span class="nb">touch</span> .nojekyll
+<span class="nv">$ </span>git init
+<span class="nv">$ </span>git branch <span class="nt">-m</span> gh-pages
+<span class="nv">$ </span>git remote add origin git@github.com:user-name/repository-name.git
+<span class="nv">$ </span>git checkout <span class="nt">-b</span> gh-pages
+<span class="nv">$ </span>git add <span class="nt">-A</span>
+<span class="nv">$ </span>git commit <span class="nt">-m</span> <span class="s2">"jekyll first build"</span>
+<span class="nv">$ </span>git push origin gh-pages
+</code></pre></div></div>
+
+<p>Wait for the site to deploy and check <code class="language-plaintext highlighter-rouge">Settings/Pages</code>: Your site is live at “https://user-name.github.io/repository-name/”.</p>]]></content><author><name></name></author><summary type="html"><![CDATA[This Jekyll based site is build locally, source code and site are then pushed to separate branches main and gh-pages respectively. This way, non-supported Jekyll site plugins can be used. Furthermore, we don’t need to wait for the site to be build on GitHub after pushing the changes to the source code. This post describes this setup. See also this answer on stackoverflow.]]></summary></entry></feed>
