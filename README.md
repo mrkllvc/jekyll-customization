@@ -17,4 +17,4 @@ This is achived by starting from an initial Jekyll code base and adding new feat
 Lighthouse performance insights for the final site with all the features listed above:
 ![Lighthouse PageSpeed Insights](./images/performance.png)
 
-For more information, check the source code or the website: [jekyll-customization](https:// mrkllvc.github.io/jekyll-customization/). You can also leave a comment under posts.
+For more information, check the source code or the website: [jekyll-customization](https://mrkllvc.github.io/jekyll-customization/). You can also leave a comment under posts.
