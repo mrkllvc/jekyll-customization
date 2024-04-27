@@ -14,7 +14,7 @@ This repository contains some instructions on how to customize a Jekyll website 
 
 This is achived by starting from an initial Jekyll code base and adding new features that are needed. 
 
-Lighthouse performance insights for the final site with all the features listed above:
+Lighthouse performance insights (for desktop) for the final site with all the features listed above:
 ![Lighthouse PageSpeed Insights](./images/performance.png)
 
 For more information, check the source code or the website: [jekyll-customization](https://mrkllvc.github.io/jekyll-customization/). You can also leave a comment under posts.
