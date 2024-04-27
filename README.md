@@ -1,55 +1,20 @@
-# jekyll-test
+# jekyll-customization
 
-Repository for testing Jekyll setup where the site is built locally, source and site are then pushed to separate branches main and gh-pages respectively.
+This repository contains some instructions on how to customize a Jekyll website or blog in order to:
 
-Using default minima theme with only added `assets/main.scss` to enable dark mode by turning on or off dark mode in the OS.
+- use custom plugins with GitHub pages;
 
-## How-to
-Build Jekyll site locally and push source code and site to separate branches: main and gh-pages on GitHub mainly following the answer [here](https://stackoverflow.com/a/28252200).
+- enable dark mode and set the dark theme;
 
-First, initialize the repository and Jekyll code base:
-```bash
-$ mkdir jekyll-test && cd jekyll-test
-$ git init --initial-branch=main
-$ git remote add origin git@github.com:<user-name>/jekyll-test.git
-$ jekyll new .
-```
+- enable MathJax for LaTeX notation;
 
-Set `baseurl: '/jekyll-test'` in `_config.yml` and add `_site` to `.gitignore`, because the site will be versioned in separate gh-pages branch. 
+- incorporate BibTeX references and citing using .bib files;
 
-Next, to build the site and serve it locally at: `http://127.0.0.1:4000/jekyll-test/`, run:
-```bash
-$ jekyll build
-$ bundle exec jekyll serve
-```
+- develop a simple comment system for Jekyll blog via contact forms.
 
-Add the local repository to GitHub:
-```bash
-($ git init -b main)
-$ git add .
-$ git commit -m "jekyll source"
-$ gh repo create
-```
-![gh repo create](./images/README_repo-create.png)
+This is achived by starting from an initial Jekyll code base and adding new features that are needed. 
 
-Push Jekyll source to main branch:
-```bash
-$ git push origin main
-```
+Lighthouse performance insights for the final site with all the features listed above:
+![Lighthouse PageSpeed Insights](./images/performance.png)
 
-Push the site to gh-pages branch:
-```bash
-$ cd _site
-$ touch .nojekyll
-$ git init
-$ git branch -m gh-pages
-$ git remote add origin git@github.com:<user-name>/jekyll-test.git
-$ git checkout -b gh-pages
-$ git add -A
-$ git commit -m "jekyll first build"
-$ git push origin gh-pages
-```
-
-Wait for the site to deploy and check `Settings/Pages`: Your site is live at [https://<user-name>.github.io/jekyll-test/](https://mrkllvc.github.io/jekyll-test/)
-
-![gh repo create](./images/README_site_deployment.png)
+For more information, check the source code or the website: [jekyll-customization](https:// mrkllvc.github.io/jekyll-customization/). You can also leave a comment under posts.

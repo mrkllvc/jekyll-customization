@@ -1,15 +1,41 @@
-title: Jekyll test
-email: my-email@example.com
+title: Jekyll Customization
 description: >- # this means to ignore newlines until "baseurl:"
-  Testing dark mode in Jekyll.
-baseurl: "/jekyll-test" # the subpath of your site, e.g. /blog
+  How to quickly customize and add features to a Jekyll website
+baseurl: "/jekyll-customization" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
 github_username: mrkllvc
 
 # Build settings
 theme: minima
+
 plugins:
   - jekyll-feed
 
 sass:
   quiet_deps: true
+
+# jekyll-scholar plugin settings
+scholar:
+  style: apa
+  locale: en
+  sort_by: none
+  order: ascending
+  source: ./_bibliography
+  bibliography: simple.bib
+  bibliography_template: "{{reference}}"
+  replace_strings: true
+  join_strings:    true
+  details_dir:    bibliography
+  details_layout: bibtex.html
+  details_link:   Details
+  query: "@*"
+
+# comments via contact forms
+comments:
+  use: "staticforms"
+  staticforms:
+    action: "https://api.staticforms.xyz/submit"
+    token: "4e5a5ee1-5fd9-47ed-9b85-aecdabd0c006"
+  web3forms:
+    action: "https://api.web3forms.com/submit"
+    token: "20a51aef-da18-46db-a079-fd60a0b9c065"

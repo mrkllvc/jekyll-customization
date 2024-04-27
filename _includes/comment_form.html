@@ -1,0 +1,56 @@
+<h2>Add Comment</h2>
+{% if site.comments.use == "staticforms" %}
+<form id="input-form" method="post" action="{{ site.comments.staticforms.action }}">
+  <input type="hidden" name="accessKey" value="{{ site.comments.staticforms.token }}">
+  <input type="hidden" name="$Date" value="{{ site.time | date: '%s' }}">
+  <input type="hidden" name="$BlogPost" value="{{ page.title }}">
+  <input type="hidden" name="subject" value="Comment to blog post {{ site.time | date_to_rfc822 }}">
+  <input type="hidden" name="redirectTo" value="{{ page.url | prepend: site.baseurl | prepend: site.url }}">
+
+  <textarea class="wide-field" id="message" name="message" rows="8" cols="68" 
+  placeholder="Your comment (Markdown and MathJax accepted)" required></textarea>
+  <label for="name">Name</label>
+  <input class="input-field" id="name" name="name" type="text" placeholder="Your name (required)" required />
+  <label for="name">E-mail (optional)</label>
+  <input class="input-field" id="name" name="$Email" type="text" placeholder="Your email (if you want a notification)" />
+  <div>
+    <button id="submit-button" type="submit">Submit</button>
+    <p id="thank-you-message">Message sent! Thank you.</p>
+  </div>
+</form>
+{% endif %}
+{% if site.comments.use == "web3forms" %}
+<form id="input-form" method="post" action="{{ site.comments.web3forms.action }}">
+  <!-- from_name = unixtimestamp -->
+  <input id="from-name" type="hidden" name="from_name" value="{{ site.time | date: '%s' }}">
+  <input id="input-subject" type="hidden" name="subject" value="{{ page.title }}">
+  <input id="input-access-key" type="hidden" name="access_key" value="{{ site.comments.web3forms.token }}">
+  <input id="input-redirect" type="hidden" name="redirect" value="{{ page.url | prepend: site.baseurl | prepend: site.url }}">
+
+  <textarea id="message" name="message" rows="10" cols="80" 
+  placeholder="Your comment (Markdown and MathJax accepted)" required></textarea>
+  <label for="name">Name</label>
+  <input class="input-field" id="name" name="name" type="text" placeholder="Your name (required)" required />
+  <label for="name">E-mail (optional)</label>
+  <input class="input-field" id="name" name="email" type="text" placeholder="Your email (if you want a notification)" />
+  <div>
+    <button id="submit-button" type="submit">Submit</button>
+    <p id="thank-you-message">Message sent! Thank you.</p>
+  </div>
+</form>
+{% endif %}
+<script>
+  const form = document.getElementById("input-form");
+  const thankYouMessage = document.querySelector('#thank-you-message');
+  form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      document.getElementById("submit-button").style.display = "none";
+      thankYouMessage.classList.add('show');
+      setTimeout(() => form.submit(), 1000);
+  });
+  
+  // Reset the form fields when the page loads
+  window.onload = function() {
+      form.reset();
+  };
+</script>

@@ -1,0 +1,10 @@
+_id: 1
+_parent: 'jekyll-customization/latex-notation'
+replying_to_uid: ''
+message: '<h3>Just testing:</h3>
+<div>
+$\LaTeX$ test. When $a \ne 0$, there are two solutions to $ax^2 + bx + c = 0$ and they are 
+$$x = {-b \pm \sqrt{b^2-4ac} \over 2a}.$$ 
+</div>'
+name: 'Lambda'
+date: 1714245683 

@@ -1,0 +1,11 @@
+_id: 1
+_parent: 'jekyll-customization/comment-system'
+replying_to_uid: ''
+message: 'Testing $\TeX$:
+When $a \ne 0$, there are two solutions to $ax^2 + bx + c = 0$ and they are
+
+$$
+x = {-b \pm \sqrt{b^2-4ac} \over 2a}.
+$$'
+name: 'Lambda'
+date: 1714228331

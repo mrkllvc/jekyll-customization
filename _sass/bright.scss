@@ -1,0 +1,134 @@
+// bright mode theme
+.site-title {
+    color: black;
+    &:visited {
+      color: black;
+    }
+}
+
+.source-code-link {
+    margin-bottom: .5em;
+}
+
+.site-nav {
+    .page-link {
+        font-size: 20px;
+        color: black;
+    }
+}
+
+.site-title {
+    margin-top: 0.5em;
+    color: black;
+    &:visited {
+        color: black;
+    }
+}
+
+/**
+* Comments form
+*/
+label {
+    color: black;
+    display: block;
+    margin-top: 1em;
+}
+
+form input, form textarea, form button {
+    color: black;
+    font-family: inherit;
+    font-size: inherit;
+    border: 1px solid #808080;
+    border-radius: 2px;
+    background: none;
+    padding: 0.4rem 0.5rem;
+    margin: 0;
+}
+
+.wide-field {
+    width:95%;
+}
+
+.input-field {
+    width: 320px;
+    height: 20px;
+}
+
+#submit-button {
+    color: rgb(247, 247, 247);
+    border: 1px solid  rgb(194, 194, 194);
+    background-color: #028152;
+    padding: 0.5rem 0.75rem;
+    margin-top: 1rem;
+    justify-self: start;
+    cursor: pointer;
+}
+
+#submit-button:hover {
+    background-color: #04AA6D;
+}
+
+#thank-you-message {
+    display: none;
+}
+
+#thank-you-message.show {
+    margin-top: 0.5rem;
+    display: block;
+}
+
+// syntax highlighting
+pre,
+code {
+    color: #080808;
+    border: 1px solid #808080;
+    background-color: whitesmoke;
+}
+
+.highlight {
+    .highlighter-rouge & {
+        background-color: whitesmoke;
+    }
+}
+
+/**
+ * Existing comments
+ */
+.comment__new {
+    padding: 0px 0px 14px 0px;
+}
+.comment__author {
+    color: grey;
+}
+.comment__admin_tag {
+    background-color: rgb(187, 255, 187);
+    border-radius: 3px;
+    padding: 3px;
+}
+.comment__date {
+    font-size: 14px;
+}
+.comment__body {
+    font-size: 16px;
+}
+.comment__meta {
+    text-align: left;
+    color: grey;
+    font-size: 14px;
+}
+.comments__existing {
+    padding: 8px 0px 0px 0px;
+}
+.comment {
+    border-top: 0px solid grey;
+    padding: 0px 0px 0px 0px;
+    margin-bottom: 1em;
+}
+.comment.child {
+    margin-left: 3em;
+}
+.comment__reply-link {
+    color: grey;
+    font-size: 14px;
+    cursor: pointer;
+}
